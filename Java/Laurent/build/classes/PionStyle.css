@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25 nov. 2017, 00:20:24
+    Author     : Laurent Fouetillou 
+*/
+
+.hole
+{
+    align-self: center;
+    
+    -fx-stroke-width: 8px;
+    -fx-stroke-type: outside;
+    -fx-blend-mode: multiply;
+    
+    -fx-fill: white;
+    -fx-effect: innershadow(three-pass-box, #3e3e3e, 10, 0.5, 0, 0);
+    
+    -fx-border-radius: 40px;
+}
+
+.pion
+{
+    -fx-effect: innershadow(gaussian, #eae7e7, 10, 0.5, 0, 0);
+}
+
+.background
+{
+    background-color: black;
+}

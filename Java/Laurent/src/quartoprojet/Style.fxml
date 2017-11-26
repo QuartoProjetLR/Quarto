@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
+   <children>
+      <GridPane layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="604.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" percentWidth="25.0" prefWidth="70.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" percentWidth="50.0" prefWidth="165.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" percentWidth="25.0" prefWidth="65.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="129.0" minHeight="0.0" percentHeight="15.0" prefHeight="31.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="267.0" minHeight="10.0" percentHeight="70.0" prefHeight="236.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Circle radius="67.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" GridPane.rowIndex="1">
+               <fill>
+                  <LinearGradient endX="1.0" endY="0.0380952380952381" startX="0.9619047619047619" startY="0.9857142857142858">
+                     <stops>
+                        <Stop color="#727272" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <effect>
+                  <InnerShadow choke="0.53" color="#7f90a3" height="68.44" radius="32.980000000000004" width="65.48" />
+               </effect>
+            </Circle>
+            <Circle radius="100.0" styleClass="case" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <fill>
+                  <LinearGradient endX="1.0" endY="0.0380952380952381" startX="0.9619047619047619" startY="0.9857142857142858">
+                     <stops>
+                        <Stop color="#727272" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Circle>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <Circle centerX="100.0" centerY="100.0" fill="#7cb2bf" layoutX="-24.0" layoutY="40.0" radius="100.0" smooth="false" styleClass="pion" />
+                  <Circle fill="DODGERBLUE" layoutX="76.0" layoutY="140.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" styleClass="hole" />
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
