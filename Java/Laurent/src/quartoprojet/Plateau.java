@@ -6,6 +6,11 @@
 package quartoprojet;
 
 import java.util.Arrays;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 
 /**
  *
@@ -16,13 +21,16 @@ public class Plateau
 
     private final int NB_CASES = 4;
     private Pion[][] cases;
-    private int[] propsPionsLigne, propsPionsColonne;
+    private Integer [] propsPionsLigne, propsPionsColonne, propsPionsDiagTD, propsPionsDiagDT;
+    private int nbPoses = 0;
 
     public Plateau ()
     {
         cases = new Pion[NB_CASES][NB_CASES];
-        propsPionsLigne = new int[NB_CASES];
-        propsPionsColonne = new int[NB_CASES];
+        propsPionsLigne     = new Integer [NB_CASES];
+        propsPionsColonne   = new Integer [NB_CASES];
+        propsPionsDiagTD    = new Integer [NB_CASES];
+        propsPionsDiagDT    = new Integer [NB_CASES];
     }
 
     public boolean isLigneFull (int row)
@@ -35,18 +43,18 @@ public class Plateau
         //Parcoure la propsPionsLigne en recherche de pion
         while (n < NB_CASES && ligneComplete)
         {
-            Pion pion = cases[row][n];
+            Pion pion = cases[n][row];
 
             //Rempli le tableau propsPionsLigne pour comparaison des pions si la propsPionsLigne est remplie
             if (pion != null)
                 propsPionsLigne[n] = pion.getProprietes();
 
             //Si il n'y a pas de pion, sur la case courante, resultat est mis sur FALSE
-            //Et les valeurs du tableau "Ligne" sont remises à -1
+            //Et les valeurs du tableau propsLignePion sont remises à null
             else
             {
                 ligneComplete = false;
-                Arrays.fill(propsPionsLigne, -1);
+                Arrays.fill(propsPionsLigne, null);
             }
             n++;
         }
@@ -63,7 +71,7 @@ public class Plateau
         //Parcoure la propsPionsColonne en recherche de pion
         while (n < NB_CASES && colonneComplete)
         {
-            Pion pion = cases[n][col];
+            Pion pion = cases[col][n];
 
             //Rempli le tableau propsPionsColonne pour comparaison des pions si la propsPionsColonne est remplie
             if (pion != null)
@@ -74,22 +82,61 @@ public class Plateau
             else
             {
                 colonneComplete = false;
-                Arrays.fill(propsPionsColonne, -1);
+                Arrays.fill(propsPionsColonne, null);
             }
             n++;
         }
         return colonneComplete;
     }
 
-    public int comparaisonPions (int [] T)
+    public boolean isDiagTopDownFull ()
     {
-        int resultat0 = ~(T[0] | T[1] | T[2] | T[3]) & 0b1111;    //Donne 1 si les 4 pions ont le meme bit à 0 
-        int resultat1 =  (T[0] & T[1] & T[2] & T[3]);    //Donne un 1 si les 4 pions ont le meme bit à 1
-        int resultat = resultat0 | resultat1;
-        System.out.println("Resultat 0: "+Integer.toBinaryString(resultat0));
-        System.out.println("Resultat 1: "+Integer.toBinaryString(resultat1));
-        System.out.println("Resultat: "+Integer.toBinaryString(resultat));
-        return resultat;
+        int i = 0;
+        boolean full = true;
+        while ( i<NB_CASES && full )
+        {
+            if (cases[i][i] != null)
+                propsPionsDiagTD[i] = cases[i][i].getProprietes();
+            else 
+                full = false;
+            i++;
+        }
+        return full;
+    }
+    
+    public boolean isDiagDownTopFull ()
+    {
+        int col = 0;
+        int lgn = NB_CASES-1;
+        boolean full = true;
+        while ( col<NB_CASES && full )
+        {
+            if (cases[col][lgn] != null) 
+                propsPionsDiagDT[col] = cases[col][lgn].getProprietes();
+            else 
+                full = false;
+            lgn--;
+            col++;
+        }
+        return full;
+    }
+    
+    public int comparaisonPions (Integer [] T)
+    {
+        try 
+        {
+            int resultat0 = ~(T[0] | T[1] | T[2] | T[3]) & 0b1111;    //Donne 1 si les 4 pions ont le meme bit à 0 
+            int resultat1 =  (T[0] & T[1] & T[2] & T[3]);    //Donne un 1 si les 4 pions ont le meme bit à 1
+            int resultat = resultat0 | resultat1;
+            System.out.println("Resultat 0: "+Integer.toBinaryString(resultat0));
+            System.out.println("Resultat 1: "+Integer.toBinaryString(resultat1));
+            System.out.println("Resultat: "+Integer.toBinaryString(resultat));
+            return resultat;
+        }
+        catch (NullPointerException e)
+        {
+            return 0;
+        }
     
 }
     public boolean ligneGagnante ()
@@ -105,10 +152,22 @@ public class Plateau
         int resultat = comparaisonPions(propsPionsColonne);
         return resultat != 0;
     }
+    
+    public boolean diagTDGagnante ()
+    {
+        int resultat = comparaisonPions(propsPionsDiagTD);
+        return resultat != 0;
+    }
+    
+    public boolean diagDTGagnante ()
+    {
+        int resultat = comparaisonPions(propsPionsDiagDT);
+        return resultat != 0;
+    }
 
     public boolean placementVictorieux ()
     {
-        return ligneGagnante() || colonneGagnante();
+        return ligneGagnante() || colonneGagnante() || diagDTGagnante() || diagTDGagnante();
     }
 
     public boolean isCaseVide (int x, int y)
@@ -132,6 +191,14 @@ public class Plateau
         if (isCaseVide(x, y))
         {
             cases[x][y] = p;
+            nbPoses++;
+            if (nbPoses >= 4)
+            {
+                isLigneFull(y);
+                isColonneFull(x);
+                isDiagDownTopFull();
+                isDiagTopDownFull();
+            }
             return true;
         }
         return false;
@@ -142,6 +209,7 @@ public class Plateau
     {
         return cases[x][y].toString();
     }
+    
 
     public void plateauString ()
     {
@@ -156,12 +224,22 @@ public class Plateau
                     System.out.println("Vide");
             }
         }
-
     }
     public int getNB_CASES ()
     {
         return NB_CASES;
     }
     
-    
+    public Group getCaseRender ()
+    {
+        Circle circle = new Circle (60);
+        circle.getStyleClass().add("cases");
+        StackPane stack = new StackPane (circle);
+        stack.setStyle ("-fx-alignment: CENTER;");
+        Group Render = new Group (stack);
+        Render.getStylesheets().add("QuartoStyle.css");
+        Render.getStyleClass().add("cases");
+        
+        return Render;
+    }
 }

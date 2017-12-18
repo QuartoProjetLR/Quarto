@@ -42,5 +42,9 @@ public class Joueur
         return "Joueur{"+"nom="+nom+'}';
     }
     
+    public String getNom ()
+    {
+        return nom;
+    }
     
 }

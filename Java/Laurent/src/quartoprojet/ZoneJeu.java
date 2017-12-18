@@ -21,7 +21,7 @@ public class ZoneJeu
         plateau = new Plateau ();
         pioche = new Pioche ();
         //TODO Recuperer les noms des joueurs dans les options
-        joueur1 = new Joueur (Options.getNomJoueur1());
+        joueur1 = new Joueur ("Joueur 1");
         joueur2 = new Joueur ("Joueur 2");
         joueurActuel = joueur1;
         
@@ -75,6 +75,7 @@ public class ZoneJeu
         System.out.println(plateau.ligneGagnante());
         
     }
+    
     //TODO reinitialiser
     public void reinitialiser ()
     {
@@ -103,10 +104,23 @@ public class ZoneJeu
     {
         return joueur2;
     }
+    public Joueur getJoueurActuel ()
+    {
+        return joueurActuel;
+    }
     
     public void setJoueurActuel(Joueur j)
     {
         joueurActuel = j;
+    }
+    
+    public void changerJoueurActuel ()
+    {
+        if (joueurActuel == joueur1)
+            joueurActuel = joueur2;
+        else// if (joueurActuel == joueur2)
+            joueurActuel = joueur1;
+        System.out.println(joueurActuel);
     }
     
 }

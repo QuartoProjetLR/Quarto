@@ -11,22 +11,17 @@ import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import com.sun.javafx.sg.prism.NGNode;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.*;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorAdjust;
 
 import javafx.scene.shape.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.image.*;
-import javafx.scene.input.MouseEvent;
 /**
  *
  * @author Laurent Fouetillou
  */
-public class Pion // extends Node
+public class Pion extends Node
 {
     final short COULEUR = (1<<0);
     final short FORME   = (1<<1);
@@ -41,14 +36,11 @@ public class Pion // extends Node
     
     private StackPane stack;
     private ObservableList list;
-    ImageView view_Forme, view_Hole;
-    Image r_Forme, r_Percage ;
+    Shape r_Forme, r_Percage ;
     Group Render;
-    
     
     public Pion (int val)
     {
-        super();
         selectionnable = true;
         this.proprietes = val;
         color   = ((val & COULEUR)  != 0) ? "BLANC" : "NOIR";
@@ -57,7 +49,6 @@ public class Pion // extends Node
         percage = ((val & PERCAGE)  != 0) ? "PERCE" : "REMPLI";
 
         genererGraphics(val);
-       
         
     }
     
@@ -67,93 +58,63 @@ public class Pion // extends Node
         if ((FORME & val) != 0)
         {
             forme = "CARRE";
-            r_Forme = new Image("Square.png");
+            r_Forme = new Rectangle(shapeSize*2, shapeSize*2);
+            //(Rectangle) r_Forme
+            
         }
         else
         {
             forme = "ROND";
-            r_Forme = new Image("Circle.png");
+            r_Forme = new Circle(shapeSize);
         }
-        //Forme visible
-        view_Forme = new ImageView(r_Forme);
         
+        stack = new StackPane (r_Forme);
+        stack.setStyle ("-fx-alignment: CENTER;");
+        list = stack.getChildren();
         
         //Defini sa couleur
         if ((COULEUR & val) != 0)
         {
             color = "BLANC";
+            r_Forme.setFill(Color.BEIGE);
         }
         else
         {
             color = "NOIR";
-            //Change la couleur du pion à partir de la couleur du pion de base
-            ColorAdjust colorAdjust = new ColorAdjust ();
-            colorAdjust.setHue(0.2);
-            colorAdjust.setSaturation(0.2);
-            view_Forme.setEffect(colorAdjust);
+            r_Forme.setFill(Color.GREY);
         }
+        r_Forme.getStyleClass().add("pion");
         
         //Defini la taille
         if ((TAILLE & val) != 0)
         {
             taille = "MINCE";
-            view_Forme.setScaleX(0.75);
-            view_Forme.setScaleY(0.75);
+            r_Forme.setScaleX(0.75);
+            r_Forme.setScaleY(0.75);
         }
         else
         {
             taille = "LARGE";
         }
-        //Rend la forme de la taille du conteneur
-        view_Forme.setFitWidth(100);
-        view_Forme.setPreserveRatio(true);
-        stack = new StackPane (view_Forme);
-        //stack.setStyle ("-fx-alignment: CENTER;");
-        list = stack.getChildren();
         
-        
-        //Ajout de l'image du perçage
-        r_Percage = new Image("Hole.png");
-        view_Hole = new ImageView (r_Percage);
-        //Rend la view de la meme taille que le container
-        view_Hole.setFitWidth(100);
-        view_Hole.setPreserveRatio(true);
         //Ajoute ou non le perçage
         if ((PERCAGE & val) != 0)
         {
             percage = "PERCE";
-            
-            view_Hole.setBlendMode(BlendMode.MULTIPLY);
-            
-            //Ajout de la meme image avec un blend mode different car
-            //JavaFX ne gere pas les blends de la meme façon que Photoshop apparement...
-            ImageView view_Hole2 = new ImageView (r_Percage);
-            view_Hole2.setBlendMode(BlendMode.LIGHTEN);
-            view_Hole2.setFitWidth(100);
-            view_Hole2.setPreserveRatio(true);
-            list.add(view_Hole2);
+            r_Percage = new Circle(15);
+            r_Percage.getStyleClass().add("hole");
+            list.add(r_Percage);
         }
         else
         {
             percage = "REMPLI";
-            /*L'opacité du trou est mise à 0 afin que le pion occupe toujours la meme taille
-            mais que le trou ne soit pas visible (pirouette pour eviter de faire une image
-            pour chaque petit pion)*/
-            view_Hole.setOpacity(0);
         }
-        list.add(view_Hole);
-        
-        Render = new Group (list);
-        //Render.getChildren().add(view_Hole);
+    
+        Render = new Group (stack);
         Render.getStylesheets().add("QuartoStyle.css");
         Render.setId(""+proprietes);
-        Render.setCursor(Cursor.HAND);
-        //Render.setDisable(true);
     }
-    public Pion getPion()
-    {
-        return this;
-    }
+    
     public boolean isSelectionnable ()
     {
         return selectionnable;
@@ -161,8 +122,6 @@ public class Pion // extends Node
     public void setSelectionnable (boolean selectionnable)
     {
         this.selectionnable = selectionnable;
-        if (!selectionnable)
-            Render.setCursor(Cursor.DEFAULT);
     }
     
     public int getProprietes ()
@@ -188,7 +147,26 @@ public class Pion // extends Node
     {
         return Render;
     }
+    @Override
+    protected NGNode impl_createPeer ()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    @Override
+    public BaseBounds impl_computeGeomBounds (BaseBounds bounds, BaseTransform tx)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    @Override
+    protected boolean impl_computeContains (double localX, double localY)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    @Override
+    public Object impl_processMXNode (MXNodeAlgorithm alg, MXNodeAlgorithmContext ctx)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
-   
     
 }
