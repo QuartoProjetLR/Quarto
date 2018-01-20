@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="fond_menu" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="quartoprojet.MenuPrincipalController">
+   <effect>
+      <DropShadow />
+   </effect>
+   <children>
+      <Text cache="true" cacheHint="QUALITY" fill="#f8f8f8" layoutX="329.0" layoutY="54.0" stroke="#517490" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="4.0" text="Q U A R T O" textAlignment="CENTER" wrappingWidth="1279.9999883174896" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+         <font>
+            <Font name="System Bold" size="64.0" />
+         </font>
+      </Text>
+      <Label fx:id="boutonPlateauDeuxJoueurs" layoutX="507.0" layoutY="198.0" onMouseClicked="#boutonPlateauDeuxJoueurs" onMouseEntered="#jouerSoundAuSurvol" styleClass="item_menu" text="2 JOUEURS" textFill="WHITE" AnchorPane.topAnchor="200.0">
+         <font>
+            <Font size="48.0" />
+         </font>
+         <padding>
+            <Insets left="15.0" right="15.0" />
+         </padding>
+      </Label>
+      <Label disable="true" layoutX="476.0" layoutY="302.0" onMouseEntered="#jouerSoundAuSurvol" styleClass="item_menu" text="JOUEUR VS IA" textFill="WHITE" AnchorPane.topAnchor="300.0">
+         <font>
+            <Font size="48.0" />
+         </font>
+         <padding>
+            <Insets left="15.0" right="15.0" />
+         </padding>
+      </Label>
+      <Label fx:id="boutonOptions" layoutX="526.0" layoutY="410.0" onMouseClicked="#boutonOptions" onMouseEntered="#jouerSoundAuSurvol" styleClass="item_menu" text="OPTIONS" textAlignment="CENTER" textFill="WHITE" AnchorPane.topAnchor="400.0">
+         <font>
+            <Font size="48.0" />
+         </font>
+         <padding>
+            <Insets left="15.0" right="15.0" />
+         </padding>
+      </Label>
+      <Label fx:id="boutonQuitter" layoutX="532.0" layoutY="511.0" onMouseClicked="#boutonQuitter" onMouseEntered="#jouerSoundAuSurvol" styleClass="item_menu" text="QUITTER" textAlignment="CENTER" textFill="WHITE" AnchorPane.topAnchor="500.0">
+         <font>
+            <Font size="48.0" />
+         </font>
+         <padding>
+            <Insets left="15.0" right="15.0" />
+         </padding>
+      </Label>
+   </children>
+</AnchorPane>

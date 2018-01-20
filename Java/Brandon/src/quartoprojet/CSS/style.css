@@ -1,0 +1,86 @@
+.fond_menu {
+    -fx-background-image: url("../Images/fond_menu.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+
+.fond_plateau {
+    -fx-background-image: url("../Images/Plateau/fond.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+
+.item_menu:hover {
+    -fx-border-radius: 15;
+    -fx-border-color: steelblue;
+    -fx-border-width: 5;
+}
+
+.item_menu:pressed {
+    -fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
+    -fx-border-radius: 15;
+    -fx-border-width: 5;
+    -fx-border-color: steelblue;
+    -fx-background-radius: 19;
+    -fx-text-fill: steelblue;
+    -fx-opacity: 0.5;
+}
+
+.hbox_options
+{
+    -fx-background-color:  rgba(0, 100, 100, 0.3);
+    -fx-border-color:  rgba(175, 175, 175, 0.8);
+    -fx-border-width: 10;
+}
+
+.hbox_options_textfield
+{
+    -fx-border-color:  rgba(175, 175, 175, 0.8);
+    -fx-border-width: 3;
+    -fx-text-inner-color: gray;
+}
+
+.hbox_options_bouton
+{
+    -fx-background-color: rgba(30, 76, 20, 0.4);
+    -fx-border-color:  rgba(175, 175, 175, 0.8);
+    -fx-border-width: 3;
+}
+
+.hbox_options_bouton:hover
+{
+    -fx-border-color:  lightgray;
+}
+
+.hbox_options_bouton:pressed
+{
+    -fx-background-color: rgba(40, 104, 27, 0.70);
+    -fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
+}
+
+.plateau_grid
+{
+    -fx-background-color:  rgba(150, 150, 150, 0.7);
+    -fx-border-color:  rgba(175, 175, 175, 0.8);
+    -fx-border-width: 10;
+}
+
+.pioche_grid
+{
+    -fx-background-color:  rgba(150, 150, 150, 0.7);
+    -fx-border-color:  rgba(120, 60, 60, 0.8);
+    -fx-border-width: 10;
+}
+
+.pion_selectionne_grid
+{
+    -fx-background-color:  rgba(150, 150, 150, 0.7);
+    -fx-border-color:  rgba(0, 120, 0, 0.8);
+    -fx-border-width: 10;
+}
+
+.plateau_boutton {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+}
